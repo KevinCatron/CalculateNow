@@ -1,0 +1,196 @@
+<head>
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css">
+
+<style type="text/css"> 
+    
+html {
+  height: 100%;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Arial, sans-serif";
+}
+
+body {
+  background: radial-gradient(circle, #FFF, #888)
+}
+
+#calculator {
+  height: auto;
+  width: 335px;
+  margin: 100px auto;
+  padding: 20px;
+  background: #4A575B;
+  border-radius: 3px;
+  box-shadow: 7px 7px 5px grey;
+}
+
+
+/* Top portion */
+
+.result .clear {
+  float: left;
+}
+
+.top .result {
+  height: 40px;
+  width: 212px;
+  background: #DDFAFF;
+  float: right;
+  box-shadow: inset -2px 2px 3px grey;
+  padding: 0 10px;
+  /*Input text*/
+  font-size: 16px;
+  line-height: 40px;
+}
+/*CSS FOR KEYS*/
+.keys span {
+  position: relative;
+  float: left;
+  top: 3px;
+  cursor: pointer;
+  width: 66px;
+  height: 36px;
+  background: #DAE5E8;
+  border-radius: 3px;
+  margin: 0 7px 11px 0px;
+  text-align: center;
+  line-height: 35px;
+  transition: all 0.2s ease;
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  box-shadow: 2px 2px grey;
+}
+
+.clear {
+  float: left;
+  position: relative;
+  top: 3px;
+  cursor: pointer;
+  width: 66px;
+  height: 36px;
+  background: #F6FAFB;
+  border-radius: 3px;
+  margin: 0 7px 11px 0px;
+  text-align: center;
+  line-height: 35px;
+  transition: all 0.2s ease;
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+}
+
+.keys,
+.top {
+  overflow: hidden;
+}
+
+span:hover {
+  background-color: lightyellow;
+  
+}
+
+.clear:hover {
+  background-color: orangered;
+}
+
+.clear:active {
+  top: 4px;
+}
+
+.keys span:active {
+  box-shadow: 0px 0px;
+  top: 4px;
+  background-color: #DDFAFF;
+}
+
+</style>
+    
+</head>
+
+<div class=" animated bounceInUp">
+<div id="calculator">
+  <!--clear and screen key-->
+  <div class="top">
+    <span class="clear">C</span>
+
+    <div class="result">
+      <p></p>
+    </div>
+
+  </div>
+<!-- LAYOUT FOR CALCULATOR-->
+  <div class="keys">
+    <!--Number and buttons-->
+    <span value="7" name="7">7</span>
+    <span value="8">8</span>
+    <span value="9">9</span>
+    <span value="+" class="operator">+</span>
+    <span value="4">4</span>
+    <span value="5">5</span>
+    <span value="6">6</span>
+    <span value="-" class="operator">-</span>
+    <span value="1">1</span>
+    <span value="2">2</span>
+    <span value="3">3</span>
+    <span value="/" class="operator">/</span>
+    <span value="0">0</span>
+    <span value=".">.</span>
+    <span value="=" class="equal">=</span>
+    <span value="*" class="operator">x</span>
+
+  </div>
+
+</div>
+    
+</div>
+
+<script type = "text/javascript"> 
+    
+    window.onload = function() {
+    
+    var buttons = document.getElementsByTagName('span'),
+        result = document.querySelectorAll('.result p')[0],
+        clear = document.getElementsByClassName('clear')[0];
+  //This is the function that will do the calculating.      
+    for (var i = 0; i < buttons.length; i++) {
+        if (buttons[i].innerHTML === '=') {
+            buttons[i].addEventListener("click", calculate(i));
+        } else {
+            buttons[i].addEventListener("click", addValue(i));
+        }
+    }
+ //This will clear the result screen.        
+    clear.onclick = function() {
+        result.innerHTML = '';
+    };
+
+    function addValue(i) {
+//This will display the correct operator for the assigned text. 
+        return function() {
+            if (buttons[i].innerHTML === '/') {
+                result.innerHTML += '/';
+            } else if (buttons[i].innerHTML === 'x') {
+                result.innerHTML += '*';
+            } else {
+                result.innerHTML += buttons[i].innerHTML;
+            }
+        };
+    }
+
+    function calculate(i) {
+        
+        return function() {
+            var final_res = result.innerHTML;
+            var bugFix = final_res.replace(/\d+/g, function(numb) {
+                return parseInt(numb, 10);
+            });
+            result.innerHTML = eval(bugFix);
+        };
+    }
+}; 
+
+</script>
